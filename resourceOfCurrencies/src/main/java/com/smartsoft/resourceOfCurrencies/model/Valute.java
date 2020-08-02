@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class Valute {
 
-    private String id;
+    private int id;
     private int numCode;
     private String charCode;
     private short nominal;
@@ -19,8 +19,8 @@ public class Valute {
     public Valute() {
     }
 
-    public Valute(String id, int numCode, String charCode, short nominal, String name, BigDecimal value) {
-        this.id = id;
+    public Valute(int numCode, String charCode, short nominal, String name, BigDecimal value) {
+        this.id = 1;
         this.numCode = numCode;
         this.charCode = charCode;
         this.nominal = nominal;
@@ -28,11 +28,11 @@ public class Valute {
         this.value = value;
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -76,7 +76,7 @@ public class Valute {
         this.value = value;
     }
 
-    public Valute id(String id) {
+    public Valute id(int id) {
         this.id = id;
         return this;
     }
