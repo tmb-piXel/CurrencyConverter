@@ -1,4 +1,4 @@
-package com.smartsoft.resourceOfCurrencies.Service;
+package com.smartsoft.resourceOfCurrencies.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,17 +7,22 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import com.smartsoft.resourceOfCurrencies.model.Valute;
+import com.smartsoft.resourceOfCurrencies.model.Currency;
+import com.smartsoft.resourceOfCurrencies.repository.ValuteRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 @Service
 public class XMLService {
 
-    public List<Valute> parseValute() {
+    @Autowired
+    ValuteRepository valuteRepository;
 
-        List<Valute> listValute = new ArrayList<>();
+    public List<Currency> parseValute() {
+
+        List<Currency> listValute = new ArrayList<>();
         
         try {
             String url = "http://www.cbr.ru/scripts/XML_daily.asp";
@@ -36,7 +41,7 @@ public class XMLService {
                 String name = document.getElementsByTagName("Name").item(i).getTextContent();
                 BigDecimal value = new BigDecimal(document.getElementsByTagName("Value").item(i).getTextContent().replace(",", "."));
 
-                Valute valute = new Valute(numCode, charCode, nominal, name, value);
+                Currency valute = new Currency(numCode, charCode, nominal, name, value);
 
                 listValute.add(valute);
             }
@@ -44,6 +49,16 @@ public class XMLService {
             e.printStackTrace();
         }
         return listValute;
+    }
+
+    public Currency save (Currency valute) {
+        return valuteRepository.save(valute);
+    }
+    
+    public void saveAll (List<Currency> listValute) {
+        for(Currency valute : listValute) {
+            valuteRepository.save(valute);
+        }
     }
     
 }
