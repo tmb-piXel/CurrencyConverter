@@ -1,5 +1,8 @@
 package com.smartsoft.resourceOfCurrencies.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,22 +15,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Currency {
+public class Rate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_currency")
     private long id;
-    private short numcode;
     private String charcode;
-    private int nominal;
-    private String name;
+    private BigDecimal value;
+    @Column(name="date_add")
+    private LocalDate date;
 
-    public Currency(short numCode, String charCode, int nominal, String name) {
-        this.numcode = numCode;
-        this.charcode = charCode;
-        this.nominal = nominal;
-        this.name = name;
+    public Rate(String charcode, BigDecimal value, LocalDate date) {
+        this.charcode = charcode;
+        this.value = value;
+        this.date = date;
     }
-
+    
 }

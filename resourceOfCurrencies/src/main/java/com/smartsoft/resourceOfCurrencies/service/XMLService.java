@@ -1,6 +1,7 @@
 package com.smartsoft.resourceOfCurrencies.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.smartsoft.resourceOfCurrencies.model.Currency;
-import com.smartsoft.resourceOfCurrencies.repository.ValuteRepository;
+import com.smartsoft.resourceOfCurrencies.model.Rate;
+import com.smartsoft.resourceOfCurrencies.repository.CurrencyRepository;
+import com.smartsoft.resourceOfCurrencies.repository.RateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +21,12 @@ import org.w3c.dom.Document;
 public class XMLService {
 
     @Autowired
-    ValuteRepository valuteRepository;
+    CurrencyRepository currencyRerository;
+
+    @Autowired
+    RateRepository rateRepository;
+
+    List<Rate> listRate = new ArrayList<>();
 
     public List<Currency> parseValute() {
 
@@ -26,6 +34,7 @@ public class XMLService {
         
         try {
             String url = "http://www.cbr.ru/scripts/XML_daily.asp";
+            //String url1 = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=02/03/2002";
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -35,16 +44,20 @@ public class XMLService {
 
             for (int i = 0; i < document.getElementsByTagName("Name").getLength(); i++) {
 
-                int numCode = Integer.parseInt(document.getElementsByTagName("NumCode").item(i).getTextContent());
+                short numCode = Short.parseShort(document.getElementsByTagName("NumCode").item(i).getTextContent());
                 String charCode = document.getElementsByTagName("CharCode").item(i).getTextContent();
-                short nominal = Short.parseShort(document.getElementsByTagName("Nominal").item(i).getTextContent());
+                int nominal = Integer.parseInt(document.getElementsByTagName("Nominal").item(i).getTextContent());
                 String name = document.getElementsByTagName("Name").item(i).getTextContent();
                 BigDecimal value = new BigDecimal(document.getElementsByTagName("Value").item(i).getTextContent().replace(",", "."));
 
-                Currency valute = new Currency(numCode, charCode, nominal, name, value);
+                Currency currency = new Currency(numCode, charCode, nominal, name);
+                Rate rate = new Rate(charCode, value, LocalDate.now());
 
-                listValute.add(valute);
+                currencyRerository.save(currency);
+                rateRepository.save(rate);
+                listValute.add(currency);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,12 +65,12 @@ public class XMLService {
     }
 
     public Currency save (Currency valute) {
-        return valuteRepository.save(valute);
+        return currencyRerository.save(valute);
     }
     
     public void saveAll (List<Currency> listValute) {
         for(Currency valute : listValute) {
-            valuteRepository.save(valute);
+            currencyRerository.save(valute);
         }
     }
     

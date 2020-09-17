@@ -4,4 +4,4 @@ import com.smartsoft.resourceOfCurrencies.model.Currency;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ValuteRepository extends CrudRepository<Currency, Long> {}
+public interface CurrencyRepository extends CrudRepository<Currency, Long> {}
