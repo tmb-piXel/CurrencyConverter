@@ -1,7 +1,7 @@
 CREATE TABLE currency
 (
     id_currency serial,
-    numcode INT NOT NULL,
+    numcode varchar(3) NOT NULL,
     charcode varchar(3) NOT NULL,
     nominal INT NOT NULL,
     name varchar(50) NOT NULL,

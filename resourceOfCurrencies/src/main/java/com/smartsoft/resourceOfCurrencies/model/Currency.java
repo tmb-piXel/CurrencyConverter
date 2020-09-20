@@ -18,16 +18,25 @@ public class Currency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_currency")
     private long id;
-    private short numcode;
+    private String numcode;
     private String charcode;
     private int nominal;
     private String name;
 
-    public Currency(short numCode, String charCode, int nominal, String name) {
+    public Currency(String numCode, String charCode, int nominal, String name) {
         this.numcode = numCode;
         this.charcode = charCode;
         this.nominal = nominal;
         this.name = name;
+    }
+
+    public String toString(){
+        String id = "id = " + this.id + ", ";
+        String numcode = "num = " + this.numcode + ", ";
+        String charcode = "char = " + this.charcode + ", ";
+        String nominal = "nominal = " + this.nominal + ", ";
+        String name = "name = " + this.name;
+        return id + numcode + charcode + nominal + name;
     }
 
 }

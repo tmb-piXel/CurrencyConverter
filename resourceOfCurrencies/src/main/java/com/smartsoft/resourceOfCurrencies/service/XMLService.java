@@ -34,7 +34,6 @@ public class XMLService {
         
         try {
             String url = "http://www.cbr.ru/scripts/XML_daily.asp";
-            //String url1 = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=02/03/2002";
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -44,7 +43,7 @@ public class XMLService {
 
             for (int i = 0; i < document.getElementsByTagName("Name").getLength(); i++) {
 
-                short numCode = Short.parseShort(document.getElementsByTagName("NumCode").item(i).getTextContent());
+                String numCode = document.getElementsByTagName("NumCode").item(i).getTextContent();
                 String charCode = document.getElementsByTagName("CharCode").item(i).getTextContent();
                 int nominal = Integer.parseInt(document.getElementsByTagName("Nominal").item(i).getTextContent());
                 String name = document.getElementsByTagName("Name").item(i).getTextContent();

@@ -23,7 +23,7 @@ public class  ResourceOfCurrenciesController {
                            "       <meta charset=\"utf-8\">\n" +
                            "       <style>\n" +
                            "        P {\n" +
-                           "            line-height: 0.7em;\n" +
+                           "            line-height: 1px;\n" +
                            "        }\n" +
                            "       </style>\n" +
                            "     </head>\n" +
