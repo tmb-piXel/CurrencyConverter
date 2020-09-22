@@ -17,17 +17,19 @@ public class  ResourceOfCurrenciesController {
     public String getCurrency() {
         StringBuilder buildResponse = new StringBuilder();
 
-        String htmlStart = "<!doctype html>\n" +
-                           "<html>\n" + 
-                           "     <head>\n" +
-                           "       <meta charset=\"utf-8\">\n" +
-                           "       <style>\n" +
-                           "        P {\n" +
-                           "            line-height: 1px;\n" +
-                           "        }\n" +
-                           "       </style>\n" +
-                           "     </head>\n" +
-                           "     <body>\n";
+        String htmlStart = """
+                           <!doctype html>
+                           <html> 
+                            <head>
+                             <meta charset=\"utf-8\">
+                                <style>
+                                    P {
+                                        line-height: 1px;
+                                    }
+                                </style>
+                            </head>
+                                <body>
+                           """;
 
         String htmlEnd   = "     </body>\n" +
                            "</html>";
