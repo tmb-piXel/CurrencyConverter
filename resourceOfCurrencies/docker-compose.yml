@@ -1,0 +1,22 @@
+version: '3.8'
+services: 
+    app:
+        container_name: resource-currency
+        image: resource-currency
+        build: .
+        ports: 
+            - 8666:8555
+        depends_on: 
+            - dbpostgresql
+        environment:
+            - spring.datasource.url=jdbc:postgresql://dbpostgresql:5432/postgres
+    dbpostgresql:
+        image: postgres
+        container_name: db
+        ports:
+            - 8777:5432
+        environment: 
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=postgres
+        restart: always

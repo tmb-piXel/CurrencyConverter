@@ -1,0 +1,14 @@
+--Clean jar
+mvn clean
+
+--Build jar
+mvn package
+
+--Remove all images in docker-compose
+sudo docker-compose down --rmi all
+
+--Remove all images in docker
+sudo docker rmi $(sudo docker images -aq)
+
+--Build docker-compose
+sudo docker-compose up --build
