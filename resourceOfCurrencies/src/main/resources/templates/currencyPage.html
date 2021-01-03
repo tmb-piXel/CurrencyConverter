@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            table, th, td {
+                border: 2px solid slateblue;
+                border-collapse: collapse;
+            }
+            th, td, p {
+                padding: 1px;
+            }
+        </style>
+    </head>
+    <table>
+        <tbody>
+            <tr th:each="valute : ${valutes}">
+                <td><p th:text="${valute}"></p></td>
+            </tr> 
+        </tbody>
+    </table>
+    <body> 
+        <p th:text="${valute}" />
+    </body>
+</html>

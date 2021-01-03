@@ -4,45 +4,26 @@ import com.smartsoft.resourceOfCurrencies.model.Currency;
 import com.smartsoft.resourceOfCurrencies.service.XMLService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
-public class  ResourceOfCurrenciesController {
+@Controller
+public class ResourceOfCurrenciesController{
 
     @Autowired
     private XMLService xmlService;
 
+    @GetMapping("/currency")
+    public String currencyPageHtml(Model model){
+        model.addAttribute("valutes", xmlService.parseValute());
+        return "currencyPage";
+    }
+
     @GetMapping("/")
-    public String getCurrency() {
-        StringBuilder buildResponse = new StringBuilder();
-
-        String htmlStart = """
-                           <!doctype html>
-                           <html> 
-                            <head>
-                             <meta charset=\"utf-8\">
-                                <style>
-                                    P {
-                                        line-height: 1px;
-                                    }
-                                </style>
-                            </head>
-                                <body>
-                           """;
-
-        String htmlEnd   = "     </body>\n" +
-                           "</html>";
-
-        buildResponse.append(htmlStart);
-        
-        for (Currency valute : xmlService.parseValute()) {
-            buildResponse.append("\t\t<p>" + valute + "</p>\n");
-        }
-
-        buildResponse.append(htmlEnd);
-        
-        return buildResponse.toString();
+    public String startPageHtml(){
+        return "startPage";
     }
 
 }
